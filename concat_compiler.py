@@ -5,8 +5,7 @@ from function import Function
 
 stack = list()
 
-
-#dict of functions
+# dict of functions
 functions = {
     "+": Function.callback(add),
     "-": Function.callback(sub),
@@ -14,26 +13,23 @@ functions = {
     "/": Function.callback(div),
     "clr": Function.callback(clr),
     "print": Function.callback(prt)
-
 }
 
 
-
-
+# helper to print the contents of the stack
 def print_stack(stack):
     for elem in stack:
         print("e", str(elem), end="")
     print()
 
 
-
 #while True:
     # line = sys.stdin.read()
 for line in fileinput.input():
     for token in line.split():
-        if token in function:
-            function[token](stack)
-#                print_stack(stack)
+        if token in functions:
+            functions[token].execute(stack)
+#           print_stack(stack)
         elif token.isdigit():  # need better check than this (for floats)
             stack.append(int(token))  # need to convert into number
 
