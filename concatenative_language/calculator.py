@@ -1,5 +1,6 @@
 from concatenative_language.memory import stack
 
+
 def add():
     stack.append(stack.pop() + stack.pop())
 

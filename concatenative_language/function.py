@@ -1,5 +1,6 @@
 #from concatenative_language.concat_compiler import functions, stack
 from concatenative_language.calculator import add, sub, mul, div, clr, prt
+from concatenative_language.stack_operations import dup, drop, swap
 
 
 class Function:
@@ -27,7 +28,7 @@ class Function:
         return cls(False, f_instructions, immediate)
 
 
-    # execute a function either as a callback
+    # execute a function either as a callback or list of instructions
     def execute(self):
         # callback function--just execute
         if self.built_in:
@@ -48,5 +49,9 @@ functions = {
     "*": Function.callback(mul),
     "/": Function.callback(div),
     "clr": Function.callback(clr),
-    "print": Function.callback(prt)
+    "print": Function.callback(prt),
+    "dup": Function.callback(dup),
+    "drop": Function.callback(drop),
+    "swap": Function.callback(swap),
+    "sq": Function.instructions(["dup", "*"])
 }
