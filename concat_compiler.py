@@ -1,18 +1,19 @@
 import fileinput
 import sys
 from calculator import add, sub, mul, div, clr, prt
+from function import Function
 
 stack = list()
 
 
-#dict of callbacks
-function = {
-    "+": add,
-    "-": sub,
-    "*": mul,
-    "/": div,
-    "clr": clr,
-    "print": prt
+#dict of functions
+functions = {
+    "+": Function.callback(add),
+    "-": Function.callback(sub),
+    "*": Function.callback(mul),
+    "/": Function.callback(div),
+    "clr": Function.callback(clr),
+    "print": Function.callback(prt)
 
 }
 
