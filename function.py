@@ -1,3 +1,5 @@
+import concat_compiler.functions
+
 class Function:
     '''
     Attributes:
@@ -17,3 +19,14 @@ class Function:
     @classmethod
     def instructions(cls, f_instructions=[], immediate=False):
         return cls(False, f_instructions, immediate)
+
+    def execute(self, stack):
+        if self.c_flag:
+            self.function(stack)
+        else:
+            self.interpret(stack)
+
+    def interpret(self, stack):
+        for word in self.function:
+            concat_compiler.functions[word].execute(stack)
+
