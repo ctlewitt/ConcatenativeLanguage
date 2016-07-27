@@ -1,31 +1,37 @@
-import concat_compiler.functions
+import functions from concat_compiler
 
 class Function:
     '''
     Attributes:
-    c_flag: boolean indicating callback or list of instructions
+    built_in: boolean indicating whether a function is built in (callback) or interpreted (list of instructions)
     function: callback or list of instructions (depending on c_flag) for function
     immediate: boolean indicating function to be executed regardless of compilation state
     '''
-    def __init__(self, c_flag, function, immediate):
-        self.c_flag = c_flag
+    def __init__(self, built_in, function, immediate):
+        self.built_in = built_in
         self.function = function
         self.immediate = immediate
 
+    # instantiate function as callback function
     @classmethod
     def callback(cls, f_callback, immediate=False):
         return cls(True, f_callback, immediate)
 
+    # instantiate function with list of instructions
     @classmethod
-    def instructions(cls, f_instructions=[], immediate=False):
+    def instructions(cls, f_instructions=list(), immediate=False):
         return cls(False, f_instructions, immediate)
 
+    # execute a function either as a callback
     def execute(self, stack):
-        if self.c_flag:
+        # callback function--just execute
+        if self.built_in:
             self.function(stack)
+        # function with list of instructions--interpret each
         else:
             self.interpret(stack)
 
+    # go through each instruction in a list of instructions function
     def interpret(self, stack):
         for word in self.function:
             concat_compiler.functions[word].execute(stack)
