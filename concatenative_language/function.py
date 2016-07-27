@@ -1,4 +1,4 @@
-import functions from concat_compiler
+from concatenative_language.concat_compiler import functions, stack
 
 class Function:
     '''
@@ -23,16 +23,16 @@ class Function:
         return cls(False, f_instructions, immediate)
 
     # execute a function either as a callback
-    def execute(self, stack):
+    def execute(self):
         # callback function--just execute
         if self.built_in:
-            self.function(stack)
+            self.function()
         # function with list of instructions--interpret each
         else:
-            self.interpret(stack)
+            self.interpret()
 
     # go through each instruction in a list of instructions function
-    def interpret(self, stack):
+    def interpret(self):
         for word in self.function:
-            concat_compiler.functions[word].execute(stack)
+            functions[word].execute()
 

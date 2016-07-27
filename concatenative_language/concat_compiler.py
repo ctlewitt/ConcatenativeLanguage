@@ -1,7 +1,7 @@
 import fileinput
 import sys
-from calculator import add, sub, mul, div, clr, prt
-from function import Function
+from concatenative_language.calculator import add, sub, mul, div, clr, prt
+from concatenative_language.function import Function
 
 stack = list()
 
