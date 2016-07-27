@@ -1,6 +1,10 @@
-from concatenative_language.concat_compiler import functions, stack
+#from concatenative_language.concat_compiler import functions, stack
+from concatenative_language.calculator import add, sub, mul, div, clr, prt
+
 
 class Function:
+
+
     '''
     Attributes:
     built_in: boolean indicating whether a function is built in (callback) or interpreted (list of instructions)
@@ -22,6 +26,7 @@ class Function:
     def instructions(cls, f_instructions=list(), immediate=False):
         return cls(False, f_instructions, immediate)
 
+
     # execute a function either as a callback
     def execute(self):
         # callback function--just execute
@@ -36,3 +41,12 @@ class Function:
         for word in self.function:
             functions[word].execute()
 
+
+functions = {
+    "+": Function.callback(add),
+    "-": Function.callback(sub),
+    "*": Function.callback(mul),
+    "/": Function.callback(div),
+    "clr": Function.callback(clr),
+    "print": Function.callback(prt)
+}

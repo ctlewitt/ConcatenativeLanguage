@@ -1,19 +1,18 @@
 import fileinput
 import sys
-from concatenative_language.calculator import add, sub, mul, div, clr, prt
-from concatenative_language.function import Function
+from concatenative_language.function import functions
+from concatenative_language.memory import stack
 
-stack = list()
 
 # dict of functions
-functions = {
-    "+": Function.callback(add),
-    "-": Function.callback(sub),
-    "*": Function.callback(mul),
-    "/": Function.callback(div),
-    "clr": Function.callback(clr),
-    "print": Function.callback(prt)
-}
+# functions = {
+#     "+": Function.callback(add),
+#     "-": Function.callback(sub),
+#     "*": Function.callback(mul),
+#     "/": Function.callback(div),
+#     "clr": Function.callback(clr),
+#     "print": Function.callback(prt)
+# }
 
 
 # helper to print the contents of the stack
@@ -28,7 +27,7 @@ def print_stack(stack):
 for line in fileinput.input():
     for token in line.split():
         if token in functions:
-            functions[token].execute(stack)
+            functions[token].execute()
 #           print_stack(stack)
         elif token.isdigit():  # need better check than this (for floats)
             stack.append(int(token))  # need to convert into number
