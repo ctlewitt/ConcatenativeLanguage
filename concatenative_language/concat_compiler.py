@@ -11,6 +11,7 @@ class ConcatCompliler:
         self.stack = []
         self.compile_mode = False
         self.compile_instruction_list = []
+        self.compile_function_name = ""
         self.functions = {
             ":": Function.callback(self.enter_compile_mode, True),
             ";": Function.callback(self.exit_compile_mode, True),
@@ -28,14 +29,19 @@ class ConcatCompliler:
             "add2and2": Function.instructions([2, 2, "+"])
         }
 
-    #        self.function_interpreter = Function()
+             # self.function_interpreter = Function()
 
     def enter_compile_mode(self, *args):
         self.compile_mode = True
         self.compile_instruction_list = []
+        self.compile_function_name = ""
+
 
     def exit_compile_mode(self, *args):
         self.compile_mode = False
+        self.functions[self.compile_function_name] = Function.instructions(self.compile_instruction_list)
+        self.compile_function_name = ""
+        self.compile_instruction_list = []
         # also want to finish saving function
 
     #while True:
@@ -45,8 +51,22 @@ class ConcatCompliler:
             for token in line.split():
                 if self.compile_mode:
                     print("in compile mode")
-                    append_with_num_type_cast(self.compile_instruction_list, token)
-                    print(self.compile_instruction_list)
+                    # if token is immediate function, execute without compiling
+                    if self.functions.get(token) is not None and self.functions[token].immediate:
+                        self.execute(self.functions[token])
+                    # not immediate, so compile
+                    else:
+                        # get function name (might need to modify this later to handle variable assignment)
+                        if self.compile_function_name == "":
+                            # not allowed to have : followed immediately by ;.
+                            # Once in compilation mode, var/function name must be next
+                            # might need to allow for reassigning variables...
+                            if token in self.functions:
+                                raise Exception("cannot redeclare function")
+                            self.compile_function_name = token
+                        else:
+                            append_with_num_type_cast(self.compile_instruction_list, token)
+                            print(self.compile_function_name + str(self.compile_instruction_list))
                 else:
                     print("not in compile mode")
                     if token in self.functions:
