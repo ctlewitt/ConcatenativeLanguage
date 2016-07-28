@@ -2,6 +2,7 @@
 from concatenative_language.calculator import add, sub, mul, div, clr, prt
 from concatenative_language.stack_operations import dup, drop, swap
 from concatenative_language.memory import stack
+from concatenative_language.compilation_functions import enter_compile_mode, exit_compile_mode
 
 
 class Function:
@@ -46,6 +47,8 @@ class Function:
 
 
 functions = {
+    ":": Function.callback(enter_compile_mode, True),
+    ";": Function.callback(exit_compile_mode, True),
     "+": Function.callback(add),
     "-": Function.callback(sub),
     "*": Function.callback(mul),

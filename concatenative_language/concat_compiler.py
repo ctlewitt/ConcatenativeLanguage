@@ -1,7 +1,7 @@
 import fileinput
 import sys
 from concatenative_language.function import functions
-from concatenative_language.memory import stack
+from concatenative_language.memory import stack, compile_mode
 
 
 # dict of functions
