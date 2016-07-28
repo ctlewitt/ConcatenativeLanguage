@@ -1,26 +1,26 @@
-from concatenative_language.memory import stack
+#from concatenative_language.memory import stack
 
 
-def add():
+def add(stack):
     stack.append(stack.pop() + stack.pop())
 
 
-def sub():
+def sub(stack):
     stack.append(stack.pop() - stack.pop())
 
 
-def mul():
+def mul(stack):
     stack.append(stack.pop() * stack.pop())
 
 
-def div():
+def div(stack):
     stack.append(stack.pop() / stack.pop())
 
 
-def clr():
+def clr(stack):
     stack.pop()
 
 
-def prt():
+def prt(stack):
     print(stack[-1])
 
