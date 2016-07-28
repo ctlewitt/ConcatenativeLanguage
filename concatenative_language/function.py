@@ -1,17 +1,16 @@
 #from concatenative_language.concat_compiler import functions, stack
 from concatenative_language.calculator import add, sub, mul, div, clr, prt
 from concatenative_language.stack_operations import dup, drop, swap
+from concatenative_language.memory import stack
 
 
 class Function:
-
-
-    '''
+    """
     Attributes:
     built_in: boolean indicating whether a function is built in (callback) or interpreted (list of instructions)
     function: callback or list of instructions (depending on c_flag) for function
     immediate: boolean indicating function to be executed regardless of compilation state
-    '''
+    """
     def __init__(self, built_in, function, immediate):
         self.built_in = built_in
         self.function = function
@@ -40,7 +39,10 @@ class Function:
     # go through each instruction in a list of instructions function
     def interpret(self):
         for word in self.function:
-            functions[word].execute()
+            if type(word) == int or type(word) == float:
+                stack.append(word)
+            else:
+                functions[word].execute()
 
 
 functions = {
@@ -53,5 +55,7 @@ functions = {
     "dup": Function.callback(dup),
     "drop": Function.callback(drop),
     "swap": Function.callback(swap),
-    "sq": Function.instructions(["dup", "*"])
+    "sq": Function.instructions(["dup", "*"]),
+    "fourth": Function.instructions(["sq", "sq"]),
+    "add2and2": Function.instructions([2, 2, "+"])
 }
