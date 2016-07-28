@@ -1,11 +1,3 @@
-from concatenative_language import memory
+#from concatenative_language.memory import compile_mode, compile_instruction_list
 
 
-def enter_compile_mode():
-    memory.compile_mode = True
-    memory.compile_instruction_list = []
-
-
-def exit_compile_mode():
-    memory.compile_mode = False
-    # also want to finish saving function
