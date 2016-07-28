@@ -1,10 +1,3 @@
-#from concatenative_language.concat_compiler import functions, stack
-from concatenative_language.calculator import add, sub, mul, div, clr, prt
-from concatenative_language.stack_operations import dup, drop, swap
-from concatenative_language.memory import stack
-from concatenative_language.compilation_functions import enter_compile_mode, exit_compile_mode
-
-
 class Function:
     """
     Attributes:
@@ -24,41 +17,25 @@ class Function:
 
     # instantiate function with list of instructions
     @classmethod
-    def instructions(cls, f_instructions=list(), immediate=False):
+    def instructions(cls, f_instructions, immediate=False):
         return cls(False, f_instructions, immediate)
 
 
-    # execute a function either as a callback or list of instructions
-    def execute(self):
-        # callback function--just execute
-        if self.built_in:
-            self.function()
-        # function with list of instructions--interpret each
-        else:
-            self.interpret()
-
-    # go through each instruction in a list of instructions function
-    def interpret(self):
-        for word in self.function:
-            if type(word) == int or type(word) == float:
-                stack.append(word)
-            else:
-                functions[word].execute()
-
-
-functions = {
-    ":": Function.callback(enter_compile_mode, True),
-    ";": Function.callback(exit_compile_mode, True),
-    "+": Function.callback(add),
-    "-": Function.callback(sub),
-    "*": Function.callback(mul),
-    "/": Function.callback(div),
-    "clr": Function.callback(clr),
-    "print": Function.callback(prt),
-    "dup": Function.callback(dup),
-    "drop": Function.callback(drop),
-    "swap": Function.callback(swap),
-    "sq": Function.instructions(["dup", "*"]),
-    "fourth": Function.instructions(["sq", "sq"]),
-    "add2and2": Function.instructions([2, 2, "+"])
-}
+    # # execute a function either as a callback or list of instructions
+    # def execute(self, stack):
+    #     # callback function--just execute
+    #     if self.built_in:
+    #         self.function(stack)
+    #     # function with list of instructions--interpret each
+    #     else:
+    #         self.interpret(stack)
+    #
+    #
+    # # go through each instruction in a list of instructions function
+    # def interpret(self, stack):
+    #     for word in self.function:
+    #         if type(word) == int or type(word) == float:
+    #             stack.append(word)
+    #         else:
+    #             functions[word].execute(stack)
+    #
