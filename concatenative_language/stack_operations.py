@@ -1,17 +1,17 @@
 # from concatenative_language.memory import stack
 
 
-def dup(stack):
-    stack.append(stack[-1])
+def dup(compiler):
+    compiler.stack.append(compiler.stack[-1])
 
 
-def drop(stack):
-    stack.pop()
+def drop(compiler):
+    compiler.stack.pop()
 
 
-def swap(stack):
-    temp1 = stack.pop()
-    temp2 = stack.pop()
-    stack.append(temp1)
-    stack.append(temp2)
+def swap(compiler):
+    temp1 = compiler.stack.pop()
+    temp2 = compiler.stack.pop()
+    compiler.stack.append(temp1)
+    compiler.stack.append(temp2)
 
