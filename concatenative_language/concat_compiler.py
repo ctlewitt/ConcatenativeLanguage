@@ -1,7 +1,7 @@
 import fileinput
 import sys
 from concatenative_language.function import functions
-from concatenative_language.memory import stack, compile_mode
+from concatenative_language.memory import stack, compile_mode, compile_instruction_list
 
 
 # dict of functions
@@ -15,22 +15,18 @@ from concatenative_language.memory import stack, compile_mode
 # }
 
 
-# helper to print the contents of the stack
-def print_stack(stack):
-    for elem in stack:
-        print("e", str(elem), end="")
-    print()
-
-
 #while True:
     # line = sys.stdin.read()
 for line in fileinput.input():
     for token in line.split():
-        if token in functions:
-            functions[token].execute()
-#           print_stack(stack)
-        elif token.isdigit():  # need better check than this (for floats)
-            stack.append(int(token))  # need to convert into number
+        if compile_mode:
+            compile_instruction_list.append(token)
+        else:
+            if token in functions:
+                functions[token].execute()
+    #           print_stack(stack)
+            elif token.isdigit():  # need better check than this (for floats)
+                stack.append(int(token))  # need to convert into number
 
 
 
@@ -42,3 +38,5 @@ for line in fileinput.input():
 ## play with stack based languages
 # forth
 # factor
+
+
