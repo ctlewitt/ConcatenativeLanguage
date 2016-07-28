@@ -11,3 +11,18 @@ def is_numeric(num):
         return True
     except ValueError:
         return False
+
+
+def cast_to_number_if_possible(word):
+    try:
+        return int(word)
+    except ValueError:
+        try:
+            return float(word)
+        except ValueError:
+            return word
+
+
+def append_with_num_type_cast(the_list, token):
+    the_list.append(cast_to_number_if_possible(token))
+
