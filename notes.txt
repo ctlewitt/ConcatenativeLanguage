@@ -1,0 +1,14 @@
+It feels wrong to give each function control of the stack instead of passing it variables.  Seems to be normal, though.
+introspection
+or write out (add, 2) which indicates having 2 parameters
+can functions have attributes?
+python: inspect, get args back
+
+
+play with stack based languages
+forth
+factor
+
+
+This doesn't feel Turing complete yet--more like a programmable calculator.
+Research what makes a language Turing complete.

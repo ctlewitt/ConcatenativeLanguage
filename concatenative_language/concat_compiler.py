@@ -39,20 +39,6 @@ class ConcatCompliler:
             }
 
 
-#     def enter_compile_mode(self, *args):
-#         print(self)
-#         print("Entering compile mode")
-#         self.compile_mode = True
-# #        print(self.compile_mode)
-#         self.compile_instruction_list = []
-#         self.compile_function_name = ""
-#
-#     def exit_compile_mode(self, *args):
-#         self.compile_mode = False
-#         self.functions[self.compile_function_name] = Function.instructions(self.compile_instruction_list)
-#         self.compile_function_name = ""
-#         self.compile_instruction_list = []
-#         # also want to finish saving function
 
     # while True:
         # line = sys.stdin.read()
@@ -68,11 +54,12 @@ class ConcatCompliler:
                         # get function name (might need to modify this later to handle variable assignment)
                         if self.compile_function_name == "":
                             # not allowed to have : followed immediately by ;.
-                            # Once in compilation mode, var/function name must be next
+                            # Once in compilation mode, var/function name must be next token
                             # might need to allow for reassigning variables...
                             if token in self.functions:
                                 raise Exception("cannot redeclare function")
                             self.compile_function_name = token
+                        # get each command in function
                         else:
                             append_with_num_type_cast(self.compile_instruction_list, token)
                 else:
@@ -107,13 +94,5 @@ my_compiler = ConcatCompliler()
 my_compiler.interpret_file()
 
 
-# introspection
-# or write out (add, 2) which indicates having 2 parameters
-# can functions have attributes?
-# python: inspect, get args back
-
-## play with stack based languages
-# forth
-# factor
 
 
