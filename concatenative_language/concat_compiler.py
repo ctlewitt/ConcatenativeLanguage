@@ -5,6 +5,7 @@ from concatenative_language.utils import append_with_num_type_cast
 from concatenative_language.calculator import add, sub, mul, div, clr, prt
 from concatenative_language.stack_operations import dup, drop, swap
 from concatenative_language.compilation_functions import enter_compile_mode, exit_compile_mode
+from concatenative_language.flow_control_functions import if_conditional
 import pickle
 
 class ConcatCompliler:
@@ -24,6 +25,7 @@ class ConcatCompliler:
             self.functions = {
                 ":": Function.callback(enter_compile_mode, True),
                 ";": Function.callback(exit_compile_mode, True),
+                "if": Function.callback(if_conditional),
                 "+": Function.callback(add),
                 "-": Function.callback(sub),
                 "*": Function.callback(mul),
@@ -92,7 +94,3 @@ class ConcatCompliler:
 
 my_compiler = ConcatCompliler()
 my_compiler.interpret_file()
-
-
-
-
