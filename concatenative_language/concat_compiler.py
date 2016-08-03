@@ -18,6 +18,7 @@ class ConcatCompliler:
         self.compile_function_name = ""
         self.functions = None
         self.load_functions()
+        self.var_types = frozenset([int, float, str, bool, list])
 
     def load_functions(self):
         try:
@@ -69,10 +70,8 @@ class ConcatCompliler:
                 else:
                     if token in self.functions:
                         self.execute(self.functions[token])
-                    elif token.isdigit():  # need better check than this (for floats)
-                        self.stack.append(int(token))  # need to convert into number
-        # for function in self.functions:
-        #     print(function)
+                    else:
+                        append_with_type_cast(self.stack, token, self.functions)
         with open("saved_functions.pickle", "wb") as func_file:
             pickle.dump(self.functions, func_file, pickle.HIGHEST_PROTOCOL)
 
@@ -88,10 +87,10 @@ class ConcatCompliler:
     # go through each instruction in a list of instructions function
     def interpret(self, function):
         for word in function.function:
-            if type(word) == int or type(word) == float:
-                self.stack.append(word)
-            else:
+            if word in self.functions:
                 self.execute(self.functions[word])
+            else:
+                self.stack.append(word)
 
 
 my_compiler = ConcatCompliler()
