@@ -1,3 +1,5 @@
+import ast
+
 # helper to print the contents of the stack
 def print_stack(stack):
     for elem in stack:
@@ -38,8 +40,14 @@ def cast_to_str_if_possible(word):
 
 
 def cast_to_list_if_possible(word):
-    return True, word
-    pass
+    if word[0] == '[' and word[-1] == ']':
+        try:
+            return True, ast.literal_eval(word)
+        except ValueError("parsing into list failed"):
+            return False, word
+    else:
+        return False, word
+
 
 def append_with_type_cast(the_list, token, functions):
     casting_functions = [cast_to_number_if_possible, cast_to_bool_if_possible, cast_to_str_if_possible,
