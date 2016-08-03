@@ -13,6 +13,7 @@ class ConcatCompliler:
     def __init__(self):
         self.stack = []
         self.compile_mode = False
+        self.block_mode = False
         self.block_depth = 0
         self.compile_instruction_list = []
         self.compile_function_name = ""
@@ -51,23 +52,20 @@ class ConcatCompliler:
     def interpret_file(self):
         for line in fileinput.input():
             for token in re.findall(r'(\"[^\"]*\"|\'[^\']*\'|[\S]+|\[.^\w*\])', line):
-                if self.compile_mode:
-                    # if token is immediate function, execute without compiling
-                    if self.functions.get(token) is not None and self.functions[token].immediate:
-                        self.execute(self.functions[token])
-                    # not immediate, so compile
-                    else:
-                        # get function name (might need to modify this later to handle variable assignment)
-                        if self.compile_function_name == "":
-                            # not allowed to have : followed immediately by ;.
-                            # Once in compilation mode, var/function name must be next token
-                            # might need to allow for reassigning variables...
-                            if token in self.functions:
-                                raise Exception("cannot redeclare function")
-                            self.compile_function_name = token
-                        # get each command in function
-                        else:
-                            append_with_type_cast(self.compile_instruction_list, token, self.functions)
+                # if token is immediate function, execute without compiling
+                if self.functions.get(token) is not None and self.functions[token].immediate:
+                    self.execute(self.functions[token])
+                # if in compile mode but not block, function needs name
+                elif self.compile_mode and not self.block_mode:
+                    # Once in compilation mode, var/function name must be next token
+                    # might need to allow for reassigning functions (maybe if not built in, allow reassignment)...
+                    if token in self.functions:
+                        raise Exception("cannot redeclare function")
+                    self.compile_function_name = token
+                # in block mode (could be in compile mode or not; doesn't matter) get each command in function
+                elif self.block_mode:
+                    append_with_type_cast(self.compile_instruction_list, token, self.functions)
+                # executing (ie, not compile or block mode)
                 else:
                     if token in self.functions:
                         self.execute(self.functions[token])
