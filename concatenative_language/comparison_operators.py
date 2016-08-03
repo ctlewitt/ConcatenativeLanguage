@@ -1,25 +1,39 @@
-
+# < :removes top element from stack, compares with second to last and pushes boolean result of comparison onto stack
 def less(compiler):
-    pass
+    right, left = get_right_left(compiler)
+    compiler.stack.append(left < right)
 
 
+# > :removes top element from stack, compares with second to last and pushes boolean result of comparison onto stack
 def greater(compiler):
-    pass
+    right, left = get_right_left(compiler)
+    compiler.stack.append(left > right)
 
 
+# <= :removes top element from stack, compares with second to last and pushes boolean result of comparison onto stack
 def less_or_equal(compiler):
-    pass
+    right, left = get_right_left(compiler)
+    compiler.stack.append(left <= right)
 
 
+# >= :removes top element from stack, compares with second to last and pushes boolean result of comparison onto stack
 def greater_or_equal(compiler):
-    pass
+    right, left = get_right_left(compiler)
+    compiler.stack.append(left >= right)
 
 
+# == :removes top element from stack, compares with second to last and pushes boolean result of comparison onto stack
 def equal(compiler):
-    pass
+    right, left = get_right_left(compiler)
+    compiler.stack.append(left == right)
 
 
+# != :removes top element from stack, compares with second to last and pushes boolean result of comparison onto stack
 def not_equal(compiler):
-    pass
+    right, left = get_right_left(compiler)
+    compiler.stack.append(left != right)
 
 
+# helper: returns top and next value from stack as right and left values respectively for comparison
+def get_right_left(compiler):
+    return compiler.stack.pop(), compiler.stack[-1]
