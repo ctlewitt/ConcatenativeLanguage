@@ -7,6 +7,7 @@ from concatenative_language.stack_operations import dup, drop, swap
 from concatenative_language.compilation_functions import enter_compile_mode, exit_compile_mode
 from concatenative_language.flow_control_functions import if_conditional
 import pickle
+import re
 
 class ConcatCompliler:
     def __init__(self):
@@ -47,7 +48,7 @@ class ConcatCompliler:
         # line = sys.stdin.read()
     def interpret_file(self):
         for line in fileinput.input():
-            for token in line.split():
+            for token in re.findall(r'(\"[^\"]*\"|\'[^\']*\'|[\S]+|\[.^\w*\])', line):
                 if self.compile_mode:
                     # if token is immediate function, execute without compiling
                     if self.functions.get(token) is not None and self.functions[token].immediate:
