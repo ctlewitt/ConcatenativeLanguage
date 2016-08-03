@@ -25,10 +25,13 @@ def cast_to_number_if_possible(word):
             return False, word
 
 
+# checks against string "True" or "False" rather than casting to avoid accidentally casting other variables to boolean
 def cast_to_bool_if_possible(word):
-    try:
-        return True, bool(word)
-    except ValueError:
+    if word == "True":
+        return True, True
+    elif word == "False":
+        return True, False
+    else:
         return False, word
 
 
