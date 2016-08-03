@@ -2,20 +2,16 @@ from concatenative_language.function import Function
 
 
 def enter_compile_mode(compiler):
-    print("in define function")
-    print("Entering compile mode")
     compiler.compile_mode = True
     compiler.compile_function_name = ""
 
 
 def enter_block_mode(compiler):
-    print("in { function")
     compiler.block_mode = True
     compiler.compile_instruction_list = []
 
 
 def exit_compile_and_block_mode(compiler):
-    print("in } function")
     # in compile_mode (and block_mode), so creating named function
     if compiler.compile_mode:
         compiler.functions[compiler.compile_function_name] = Function.instructions(compiler.compile_instruction_list)

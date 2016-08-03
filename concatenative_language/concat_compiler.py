@@ -6,6 +6,7 @@ from concatenative_language.calculator import add, sub, mul, div, clr, prt
 from concatenative_language.stack_operations import dup, drop, swap
 from concatenative_language.compilation_functions import enter_compile_mode, exit_compile_and_block_mode, enter_block_mode
 from concatenative_language.flow_control_functions import if_conditional
+from concatenative_language.comparison_operators import less, less_or_equal, greater, greater_or_equal, equal, not_equal
 import pickle
 import re
 
@@ -31,6 +32,12 @@ class ConcatCompliler:
                 "{": Function.callback(enter_block_mode, True),
                 "}": Function.callback(exit_compile_and_block_mode, True),
                 "if": Function.callback(if_conditional),
+                "<": Function.callback(less),
+                "<=": Function.callback(less_or_equal),
+                ">": Function.callback(greater),
+                ">=": Function.callback(greater_or_equal),
+                "==": Function.callback(equal),
+                "!=": Function.callback(not_equal),
                 "+": Function.callback(add),
                 "-": Function.callback(sub),
                 "*": Function.callback(mul),
