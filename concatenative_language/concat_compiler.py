@@ -1,7 +1,7 @@
 import fileinput
 import sys
 from concatenative_language.function import Function
-from concatenative_language.utils import append_with_num_type_cast
+from concatenative_language.utils import append_with_type_cast
 from concatenative_language.calculator import add, sub, mul, div, clr, prt
 from concatenative_language.stack_operations import dup, drop, swap
 from concatenative_language.compilation_functions import enter_compile_mode, exit_compile_mode
@@ -12,6 +12,7 @@ class ConcatCompliler:
     def __init__(self):
         self.stack = []
         self.compile_mode = False
+        self.block_depth = 0
         self.compile_instruction_list = []
         self.compile_function_name = ""
         self.functions = None
@@ -63,7 +64,7 @@ class ConcatCompliler:
                             self.compile_function_name = token
                         # get each command in function
                         else:
-                            append_with_num_type_cast(self.compile_instruction_list, token)
+                            append_with_type_cast(self.compile_instruction_list, token, self.functions)
                 else:
                     if token in self.functions:
                         self.execute(self.functions[token])
