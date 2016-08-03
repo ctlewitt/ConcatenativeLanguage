@@ -1,4 +1,4 @@
-# from concatenative_language.memory import stack
+#  add additional functions bi, dip
 
 
 def dup(compiler):
