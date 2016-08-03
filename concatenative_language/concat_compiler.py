@@ -4,7 +4,7 @@ from concatenative_language.function import Function
 from concatenative_language.utils import append_with_type_cast
 from concatenative_language.calculator import add, sub, mul, div, clr, prt
 from concatenative_language.stack_operations import dup, drop, swap
-from concatenative_language.compilation_functions import enter_compile_mode, exit_compile_mode
+from concatenative_language.compilation_functions import enter_compile_mode, exit_compile_and_block_mode, enter_block_mode
 from concatenative_language.flow_control_functions import if_conditional
 import pickle
 import re
@@ -26,8 +26,9 @@ class ConcatCompliler:
                 self.functions = pickle.load(func_file)
         except IOError:
             self.functions = {
-                ":": Function.callback(enter_compile_mode, True),
-                ";": Function.callback(exit_compile_mode, True),
+                "define": Function.callback(enter_compile_mode, True),
+                "{": Function.callback(enter_block_mode, True),
+                "}": Function.callback(exit_compile_and_block_mode, True),
                 "if": Function.callback(if_conditional),
                 "+": Function.callback(add),
                 "-": Function.callback(sub),
