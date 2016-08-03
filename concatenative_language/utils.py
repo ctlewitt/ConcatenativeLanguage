@@ -49,17 +49,17 @@ def cast_to_list_if_possible(word):
         return False, word
 
 
-def append_with_type_cast(the_list, token, functions):
-    casting_functions = [cast_to_number_if_possible, cast_to_bool_if_possible, cast_to_str_if_possible,
-                         cast_to_list_if_possible]
+def append_with_type_cast(the_list, token, functions=None):
+    casting_functions = [cast_to_number_if_possible, cast_to_str_if_possible,
+                         cast_to_list_if_possible, cast_to_bool_if_possible]
+    # if token cannot be cast, then it could be a function name
+    if functions and token in functions:
+        the_list.append(token)
+        return
     # check if token to be cast to any variable type
     for function in casting_functions:
         successful_cast, cast_val = function(token)
         if successful_cast:
             the_list.append(cast_val)
             return
-    # if token cannot be cast, then it could be a function name
-    if token in functions:
-        the_list.append(token)
-        return
     raise TypeError("token {} is invalid variable type or function name; could not be resolved".format(token))
