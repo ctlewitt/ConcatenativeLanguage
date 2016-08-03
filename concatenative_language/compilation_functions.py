@@ -9,10 +9,13 @@ def enter_compile_mode(compiler):
     compiler.compile_instruction_list = []
     compiler.compile_function_name = ""
 
+def enter_block_mode(compiler):
+    pass
 
-def exit_compile_mode(compiler):
+def exit_compile_and_block_mode(compiler):
     print("in ; function")
     compiler.compile_mode = False
     compiler.functions[compiler.compile_function_name] = Function.instructions(compiler.compile_instruction_list)
     compiler.compile_function_name = ""
     compiler.compile_instruction_list = []
+
