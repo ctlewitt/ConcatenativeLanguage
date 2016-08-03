@@ -1,3 +1,5 @@
+Need to have lists [] be added to the stack as functions.
+
 It feels wrong to give each function control of the stack instead of passing it variables.  Seems to be normal, though.
 introspection
 or write out (add, 2) which indicates having 2 parameters
