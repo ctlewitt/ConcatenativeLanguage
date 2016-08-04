@@ -4,11 +4,44 @@
 3
 { 1 > }
 { 1 -
-  { dup }
-  dip
+  { dup } dip
 }
 while
 drop
 show_stack
 
-"hello"
+# making stack be correctly arranged
+
+7
+-2
+{ 0 == }
+{ drop drop 1 }
+{
+{ 0 < }
+{ { reciprocal } dip
+  abs
+ }
+{ }
+if
+
+dup
+{ 1 > }
+{ 1 -
+  { { dup } dip } dip
+}
+while
+drop
+show_stack
+
+
+{ 1 > }
+{
+  1 -
+  { * } dip
+}
+while
+drop
+}
+if
+show_stack
+print
