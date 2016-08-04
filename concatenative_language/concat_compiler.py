@@ -5,7 +5,7 @@ from concatenative_language.utils import append_with_type_cast
 from concatenative_language.calculator import add, sub, mul, div, clr, prt
 from concatenative_language.stack_operations import dup, drop, swap
 from concatenative_language.compilation_functions import enter_compile_mode, exit_compile_and_block_mode, enter_block_mode
-from concatenative_language.flow_control_functions import if_conditional
+from concatenative_language.flow_control_functions import if_conditional, while_loop
 from concatenative_language.comparison_operators import less, less_or_equal, greater, greater_or_equal, equal, not_equal
 import pickle
 import re
@@ -32,6 +32,7 @@ class ConcatCompliler:
                 "{": Function.callback(enter_block_mode, True),
                 "}": Function.callback(exit_compile_and_block_mode, True),
                 "if": Function.callback(if_conditional),
+                "while": Function.callback(while_loop),
                 "<": Function.callback(less),
                 "<=": Function.callback(less_or_equal),
                 ">": Function.callback(greater),
