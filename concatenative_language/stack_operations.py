@@ -15,3 +15,22 @@ def swap(compiler):
     compiler.stack.append(temp1)
     compiler.stack.append(temp2)
 
+
+def rot(compiler):
+    temp1 = compiler.stack.pop()
+    temp2 = compiler.stack.pop()
+    temp3 = compiler.stack.pop()
+    compiler.stack.append(temp1)
+    compiler.stack.append(temp3)
+    compiler.stack.append(temp2)
+
+
+def dip(compiler):
+    # get function dip will execute
+    func = compiler.stack.pop()
+    # remove top of stack temporarily
+    top = compiler.stack.pop()
+    # execute function on (what were) elements just below the top of the stack
+    compiler.execute(func)
+    # replace the top of the stack
+    compiler.stack.append(top)
