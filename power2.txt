@@ -1,0 +1,14 @@
+# filling stack with numbers (or words)
+
+"hello "
+3
+{ 1 > }
+{ 1 -
+  { dup }
+  dip
+}
+while
+drop
+show_stack
+
+"hello"
