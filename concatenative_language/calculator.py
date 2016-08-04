@@ -1,5 +1,6 @@
 
 def add(compiler):
+    compiler.execute(compiler.functions['swap'])
     compiler.stack.append(compiler.stack.pop() + compiler.stack.pop())
 
 
@@ -9,6 +10,7 @@ def sub(compiler):
 
 
 def mul(compiler):
+    compiler.execute(compiler.functions['swap'])
     compiler.stack.append(compiler.stack.pop() * compiler.stack.pop())
 
 
