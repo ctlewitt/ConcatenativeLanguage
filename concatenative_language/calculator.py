@@ -4,6 +4,7 @@ def add(compiler):
 
 
 def sub(compiler):
+    compiler.execute(compiler.functions['swap'])
     compiler.stack.append(compiler.stack.pop() - compiler.stack.pop())
 
 
@@ -12,6 +13,7 @@ def mul(compiler):
 
 
 def div(compiler):
+    compiler.execute(compiler.functions['swap'])
     compiler.stack.append(compiler.stack.pop() / compiler.stack.pop())
 
 
