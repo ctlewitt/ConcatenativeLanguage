@@ -6,6 +6,8 @@ def if_conditional(compiler):
     # get parameters
     false_outcome = compiler.stack.pop()
     true_outcome = compiler.stack.pop()
+    condition_func = compiler.stack.pop()
+    compiler.execute(condition_func)
     condition = compiler.stack.pop()
     # if true, do true outcome
     if condition:
@@ -26,10 +28,13 @@ def while_loop(compiler):
     condition = compiler.stack.pop()
     # while condition is true, recursively repeat
     if condition:
-        print("while looping")
         compiler.execute(block)
         # leave parameters on stack for next execution
         compiler.stack.append(condition_func)
         compiler.stack.append(block)
         while_loop(compiler)
     # if condition is false, do nothing
+
+
+def do(compiler):
+    compiler.execute(compiler.stack.pop())
