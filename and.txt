@@ -1,0 +1,15 @@
+define and_op {
+  { False == }
+  { False }
+  {
+    { { False == } dip }
+    { False }
+    { True }
+    if
+
+
+  }
+  if
+
+
+}
