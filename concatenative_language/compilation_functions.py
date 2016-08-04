@@ -18,7 +18,6 @@ def enter_block_mode(compiler):
     compiler.block_depth += 1
 
 
-
 # } :
 def exit_compile_and_block_mode(compiler):
     # in compile_mode (and block_mode), so creating named function
