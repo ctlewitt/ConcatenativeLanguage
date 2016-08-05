@@ -1,0 +1,11 @@
+define mult_repeated
+{
+  { 1 > }
+  {
+    1 -
+    { * }  dip
+  }
+  while
+  drop
+}
+
