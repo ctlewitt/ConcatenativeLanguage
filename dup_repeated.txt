@@ -1,0 +1,9 @@
+define dup_repeated
+{
+  { 1 > }
+  { 1 -
+     { dup }  dip
+  }
+  while
+  drop
+}

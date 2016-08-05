@@ -1,0 +1,21 @@
+7
+15
+{ 0 == }
+{ drop drop 1 }
+{
+  { 0 < }
+  { { reciprocal } dip
+    abs
+  }
+  { }
+  if
+
+  dup
+
+  { dup_repeated } dip
+
+  mult_repeated
+
+}
+if
+print

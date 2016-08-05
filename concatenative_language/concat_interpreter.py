@@ -10,7 +10,8 @@ from concatenative_language.comparison_operators import less, less_or_equal, gre
 import pickle
 import re
 
-class ConcatCompliler:
+
+class ConcatInterpreter:
     def __init__(self):
         self.stack = []
         self.compile_mode = False
@@ -124,5 +125,5 @@ class ConcatCompliler:
 # might want to pull out large swath of duplicate code in interpret function (duplicated from interpret file)
     # def handle_compilation
 
-my_compiler = ConcatCompliler()
+my_compiler = ConcatInterpreter()
 my_compiler.interpret_file()

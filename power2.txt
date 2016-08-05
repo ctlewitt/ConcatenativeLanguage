@@ -10,7 +10,14 @@ while
 drop
 show_stack
 
-# making stack be correctly arranged
+
+
+
+
+
+
+
+
 
 7
 -2
