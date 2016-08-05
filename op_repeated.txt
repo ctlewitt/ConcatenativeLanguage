@@ -1,0 +1,10 @@
+define op_repeated1
+{
+  swap
+  { 1 > }
+  { 1 -
+       dip
+  }
+  while
+  drop
+}
