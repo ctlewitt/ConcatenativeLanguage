@@ -1,28 +1,28 @@
 
-def add(compiler):
-    compiler.execute(compiler.functions['swap'])
-    compiler.stack.append(compiler.stack.pop() + compiler.stack.pop())
+def add(interpreter):
+    interpreter.execute(interpreter.functions['swap'])
+    interpreter.stack.append(interpreter.stack.pop() + interpreter.stack.pop())
 
 
-def sub(compiler):
-    compiler.execute(compiler.functions['swap'])
-    compiler.stack.append(compiler.stack.pop() - compiler.stack.pop())
+def sub(interpreter):
+    interpreter.execute(interpreter.functions['swap'])
+    interpreter.stack.append(interpreter.stack.pop() - interpreter.stack.pop())
 
 
-def mul(compiler):
-    compiler.execute(compiler.functions['swap'])
-    compiler.stack.append(compiler.stack.pop() * compiler.stack.pop())
+def mul(interpreter):
+    interpreter.execute(interpreter.functions['swap'])
+    interpreter.stack.append(interpreter.stack.pop() * interpreter.stack.pop())
 
 
-def div(compiler):
-    compiler.execute(compiler.functions['swap'])
-    compiler.stack.append(compiler.stack.pop() / compiler.stack.pop())
+def div(interpreter):
+    interpreter.execute(interpreter.functions['swap'])
+    interpreter.stack.append(interpreter.stack.pop() / interpreter.stack.pop())
 
 
-def clr(compiler):
-    compiler.stack.pop()
+def clr(interpreter):
+    interpreter.stack.pop()
 
 
-def prt(compiler):
-    print(compiler.stack[-1])
+def prt(interpreter):
+    print(interpreter.stack[-1])
 
