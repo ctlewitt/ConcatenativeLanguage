@@ -125,5 +125,5 @@ class ConcatInterpreter:
 # might want to pull out large swath of duplicate code in interpret function (duplicated from interpret file)
     # def handle_compilation
 
-my_compiler = ConcatInterpreter()
-my_compiler.interpret_file()
+my_interpreter = ConcatInterpreter()
+my_interpreter.interpret_file()
