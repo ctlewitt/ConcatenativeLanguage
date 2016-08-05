@@ -16,13 +16,13 @@ def swap(compiler):
     compiler.stack.append(temp2)
 
 
-def rot(compiler):
-    temp1 = compiler.stack.pop()
-    temp2 = compiler.stack.pop()
-    temp3 = compiler.stack.pop()
-    compiler.stack.append(temp1)
-    compiler.stack.append(temp3)
-    compiler.stack.append(temp2)
+def rot(interpreter):
+    temp1 = interpreter.stack.pop()
+    temp2 = interpreter.stack.pop()
+    temp3 = interpreter.stack.pop()
+    interpreter.stack.append(temp1)
+    interpreter.stack.append(temp3)
+    interpreter.stack.append(temp2)
 
 
 def dip(compiler):
