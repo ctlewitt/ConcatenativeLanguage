@@ -58,17 +58,13 @@ class ConcatInterpreter:
                 "show_stack": Function.callback(print_stack)
             }
 
-
-
-    # while True:
-        # line = sys.stdin.read()
     def interpret_file(self):
         for line in fileinput.input():
             for token in re.findall(r'(\"[^\"]*\"|\'[^\']*\'|[\S]+|\[.^\w*\])', line):
                 # beginning of comment; ignore remainder of line
                 if token == "--":
                     break
-                self.interpret_word(token)
+                self.interpret_word(token, "from file")
         with open("saved_functions.pickle", "wb") as func_file:
             pickle.dump(self.functions, func_file, pickle.HIGHEST_PROTOCOL)
 
@@ -84,9 +80,12 @@ class ConcatInterpreter:
     # go through each instruction in a list of instructions function
     def interpret(self, function):
         for word in function.function:
-            self.interpret_word(word)
+            print("interpreting word: {}".format(word))
+            print("stack before {}: {}".format(word, self.stack))
+            self.interpret_word(word, "from function")
+            print("stack after{}: {}".format(word, self.stack))
 
-    def interpret_word(self, word):
+    def interpret_word(self, word, origin):
         if self.functions.get(word) is not None and self.functions[word].immediate:
             self.execute(self.functions[word])
         # if in compile mode but not block, function needs name
@@ -98,15 +97,15 @@ class ConcatInterpreter:
             self.compile_function_name = word
         # in block mode (could be in compile mode or not; doesn't matter) get each command in function
         elif self.block_mode:
-            append_with_type_cast(self.compile_instruction_list, word, self.functions)
+            append_with_type_cast(self.compile_instruction_list, word, origin, self.functions)
         # executing (ie, not compile or block mode)
         # if word in self.functions:
-
         elif word in self.functions:
             print(word)
             self.execute(self.functions[word])
+            self.execute(self.functions['show_stack'])
         else:
-            append_with_type_cast(self.stack, word, self.functions)
+            append_with_type_cast(self.stack, word, origin, self.functions)
             #self.stack.append(word)
             self.execute(self.functions['show_stack'])
 
