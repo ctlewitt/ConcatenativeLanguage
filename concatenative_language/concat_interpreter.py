@@ -65,25 +65,10 @@ class ConcatInterpreter:
     def interpret_file(self):
         for line in fileinput.input():
             for token in re.findall(r'(\"[^\"]*\"|\'[^\']*\'|[\S]+|\[.^\w*\])', line):
-                # if token is immediate function, execute without compiling
-                if self.functions.get(token) is not None and self.functions[token].immediate:
-                    self.execute(self.functions[token])
-                # if in compile mode but not block, function needs name
-                elif self.compile_mode and not self.block_mode:
-                    # Once in compilation mode, var/function name must be next token
-                    # might need to allow for reassigning functions (maybe if not built in, allow reassignment)...
-                    if token in self.functions:
-                        raise Exception("cannot redeclare function")
-                    self.compile_function_name = token
-                # in block mode (could be in compile mode or not; doesn't matter) get each command in function
-                elif self.block_mode:
-                    append_with_type_cast(self.compile_instruction_list, token, self.functions)
-                # executing (ie, not compile or block mode)
-                else:
-                    if token in self.functions:
-                        self.execute(self.functions[token])
-                    else:
-                        append_with_type_cast(self.stack, token, self.functions)
+                # beginning of comment; ignore remainder of line
+                if token == "--":
+                    break
+                self.interpret_word(token)
         with open("saved_functions.pickle", "wb") as func_file:
             pickle.dump(self.functions, func_file, pickle.HIGHEST_PROTOCOL)
 
@@ -99,31 +84,32 @@ class ConcatInterpreter:
     # go through each instruction in a list of instructions function
     def interpret(self, function):
         for word in function.function:
-            if self.functions.get(word) is not None and self.functions[word].immediate:
-                self.execute(self.functions[word])
-            # if in compile mode but not block, function needs name
-            elif self.compile_mode and not self.block_mode:
-                # Once in compilation mode, var/function name must be next token
-                # might need to allow for reassigning functions (maybe if not built in, allow reassignment)...
-                if word in self.functions:
-                    raise Exception("cannot redeclare function")
-                self.compile_function_name = word
-            # in block mode (could be in compile mode or not; doesn't matter) get each command in function
-            elif self.block_mode:
-                append_with_type_cast(self.compile_instruction_list, word, self.functions)
-            # executing (ie, not compile or block mode)
-            #if word in self.functions:
+            self.interpret_word(word)
 
-            elif word in self.functions:
-                print(word)
-                self.execute(self.functions[word])
-            else:
-                self.stack.append(word)
-                self.execute(self.functions['show_stack'])
+    def interpret_word(self, word):
+        if self.functions.get(word) is not None and self.functions[word].immediate:
+            self.execute(self.functions[word])
+        # if in compile mode but not block, function needs name
+        elif self.compile_mode and not self.block_mode:
+            # Once in compilation mode, var/function name must be next token
+            # might need to allow for reassigning functions (maybe if not built in, allow reassignment)...
+            if word in self.functions:
+                raise Exception("cannot redeclare function")
+            self.compile_function_name = word
+        # in block mode (could be in compile mode or not; doesn't matter) get each command in function
+        elif self.block_mode:
+            append_with_type_cast(self.compile_instruction_list, word, self.functions)
+        # executing (ie, not compile or block mode)
+        # if word in self.functions:
 
+        elif word in self.functions:
+            print(word)
+            self.execute(self.functions[word])
+        else:
+            append_with_type_cast(self.stack, word, self.functions)
+            #self.stack.append(word)
+            self.execute(self.functions['show_stack'])
 
-# might want to pull out large swath of duplicate code in interpret function (duplicated from interpret file)
-    # def handle_compilation
 
 my_interpreter = ConcatInterpreter()
 my_interpreter.interpret_file()
