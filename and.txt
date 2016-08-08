@@ -1,9 +1,9 @@
 define and {
   swap
-  { False == }
+  { do False == }
   { drop False }
   {
-    { False == }
+    { do False == }
     { False }
     { True }
     if

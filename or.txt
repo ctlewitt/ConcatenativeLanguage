@@ -1,9 +1,9 @@
 define or {
     swap
-    { True == }
+    { do True == }
     { drop True }
     {
-        { True == }
+        { do True == }
         { True }
         { False }
         if
