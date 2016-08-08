@@ -58,8 +58,8 @@ class ConcatInterpreter:
                 "show_stack": Function.callback(print_stack)
             }
 
-    def interpret_file(self):
-        for line in fileinput.input():
+    def interpret_file(self, input_file=None):
+        for line in fileinput.input(files=input_file):
             for token in re.findall(r'(\"[^\"]*\"|\'[^\']*\'|[\S]+|\[.^\w*\])', line):
                 # beginning of comment; ignore remainder of line
                 if token == "--":
@@ -106,5 +106,3 @@ class ConcatInterpreter:
             append_with_type_cast(self.stack, word, origin, self.functions)
 
 
-my_interpreter = ConcatInterpreter()
-my_interpreter.interpret_file()
