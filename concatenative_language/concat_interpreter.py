@@ -92,7 +92,7 @@ class ConcatInterpreter:
         elif self.compile_mode and not self.block_mode:
             # Once in compilation mode, var/function name must be next token
             # might need to allow for reassigning functions (maybe if not built in, allow reassignment)...
-            if word in self.functions:
+            if word in self.functions and not self.functions[word].overwritable:
                 raise Exception("cannot redeclare function")
             self.compile_function_name = word
         # in block mode (could be in compile mode or not; doesn't matter) get each command in function
@@ -101,13 +101,9 @@ class ConcatInterpreter:
         # executing (ie, not compile or block mode)
         # if word in self.functions:
         elif word in self.functions:
-            print(word)
             self.execute(self.functions[word])
-            self.execute(self.functions['show_stack'])
         else:
             append_with_type_cast(self.stack, word, origin, self.functions)
-            #self.stack.append(word)
-            self.execute(self.functions['show_stack'])
 
 
 my_interpreter = ConcatInterpreter()
