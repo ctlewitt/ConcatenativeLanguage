@@ -5,7 +5,7 @@ define reciprocal
 
 define abs
 {
-  { 0 < }
+  { dup 0 < }
   { 0 swap - }
   { }
   if
@@ -13,6 +13,7 @@ define abs
 
 define pow
 {
+  dup
   { 0 < }
   {
     { reciprocal } dip
@@ -20,13 +21,14 @@ define pow
   }
   { }
   if
-  1 swap
+  1 swap dup
   { 0 > }
   { rot
     { dup } dip
     *
     rot rot
     1 -
+    dup
   }
   while
   drop
