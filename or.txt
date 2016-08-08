@@ -1,0 +1,12 @@
+define or {
+    swap
+    { True == }
+    { drop True }
+    {
+        { True == }
+        { True }
+        { False }
+        if
+    }
+    if
+}
