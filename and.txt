@@ -1,15 +1,12 @@
-define and_op {
+define and {
+  swap
   { False == }
-  { False }
+  { drop False }
   {
-    { { False == } dip }
+    { False == }
     { False }
     { True }
     if
-
-
   }
   if
-
-
 }
