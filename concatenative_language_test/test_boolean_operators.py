@@ -1,4 +1,5 @@
 import unittest
+import io
 from concatenative_language.concat_interpreter import ConcatInterpreter
 
 
@@ -7,6 +8,11 @@ class TestBooleanFunctions(unittest.TestCase):
         self.my_interpreter = ConcatInterpreter()
         self.my_interpreter.interpret_file("../and.txt")
         self.my_interpreter.interpret_file("../or.txt")
+
+    def test_and_true_true_alt(self):
+        test_str = "{ True } { True } and"
+        self.my_interpreter.interpret_file(io.StringIO(test_str))
+        self.assertEqual(self.my_interpreter.stack, [True])
 
     def test_and_true_true(self):
         self.my_interpreter.interpret_file("test_input/boolean_input/test_and1.txt")

@@ -1,7 +1,6 @@
-import fileinput
 import sys
 from concatenative_language.function import Function
-from concatenative_language.utils import append_with_type_cast, print_stack
+from concatenative_language.utils import append_with_type_cast, print_stack, get_input
 from concatenative_language.calculator import add, sub, mul, div, clr, prt
 from concatenative_language.stack_operations import dup, drop, swap, rot, dip
 from concatenative_language.compilation_functions import enter_compile_mode, exit_compile_and_block_mode, enter_block_mode
@@ -9,6 +8,7 @@ from concatenative_language.flow_control_functions import if_conditional, while_
 from concatenative_language.comparison_operators import less, less_or_equal, greater, greater_or_equal, equal, not_equal
 import pickle
 import re
+import io
 
 
 class ConcatInterpreter:
@@ -58,8 +58,8 @@ class ConcatInterpreter:
                 "show_stack": Function.callback(print_stack)
             }
 
-    def interpret_file(self, input_file=None):
-        for line in fileinput.input(files=input_file):
+    def interpret_file(self, source=None):
+        for line in get_input(source):#io.StringIO("{ True } { False } and print print "print"): # fileinput.input(files=input_file):
             for token in re.findall(r'(\"[^\"]*\"|\'[^\']*\'|[\S]+|\[.^\w*\])', line):
                 # beginning of comment; ignore remainder of line
                 if token == "--":

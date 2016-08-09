@@ -1,4 +1,6 @@
 import ast
+import fileinput
+
 
 
 # helper to print the contents of the stack
@@ -67,3 +69,12 @@ def append_with_type_cast(the_list, token, origin, functions=None):
             the_list.append(cast_val)
             return
     raise TypeError("token {} is invalid variable type or function name; could not be resolved".format(token))
+
+
+# returns file-like object for interpreting
+# source can be None for stdin, filename to open a file, or actual source code
+def get_input(source):
+    if source is None or type(source) == str:
+        return fileinput.input(files=source)
+    else:
+        return source
