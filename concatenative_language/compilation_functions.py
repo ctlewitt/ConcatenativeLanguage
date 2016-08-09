@@ -4,8 +4,12 @@ from concatenative_language.constants import DEBUG_MODE
 
 # define:
 def enter_compile_mode(compiler):
-    compiler.compile_mode = True
-    compiler.compile_function_name = ""
+    if not compiler.block_mode:
+        compiler.compile_mode = True
+        compiler.need_func_name = True
+        compiler.compile_function_name = ""
+    # compiler.compile_mode = True
+    # compiler.compile_function_name = ""
 
 
 # { :
@@ -15,7 +19,7 @@ def enter_block_mode(compiler):
         compiler.block_mode = True
         compiler.compile_instruction_list = []
     else:
-        compiler.compile_instruction_list.append("{")
+        compiler.compile_instruction_list.append(compiler.functions["{"])
     compiler.block_depth += 1
 
 
@@ -39,4 +43,4 @@ def exit_compile_and_block_mode(compiler):
         compiler.compile_mode = False
         compiler.block_mode = False
     else:
-        compiler.compile_instruction_list.append("}")
+        compiler.compile_instruction_list.append(compiler.functions["}"])

@@ -3,9 +3,9 @@ import unittest
 
 def suite():
     suite = unittest.TestLoader().discover('.')
-    unittest.TextTestRunner(verbosity=1).run(suite)
-    return suite
+    unittest.TextTestRunner(verbosity=1, buffer=True).run(suite)
+#    return suite
 
 
 suite()
-unittest.main()
+#unittest.main(module=__name__, buffer=True, exit=False)

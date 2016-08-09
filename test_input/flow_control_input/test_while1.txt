@@ -1,0 +1,5 @@
+2
+{ 1 + dup 6 <= }
+{ dup 1 + { print } dip }
+while
+show_stack
