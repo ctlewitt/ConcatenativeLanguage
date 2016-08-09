@@ -9,6 +9,7 @@ from concatenative_language.comparison_operators import less, less_or_equal, gre
 import pickle
 import re
 import io
+from concatenative_language.constants import DEBUG_MODE
 
 
 class ConcatInterpreter:
@@ -80,10 +81,12 @@ class ConcatInterpreter:
     # go through each instruction in a list of instructions function
     def interpret(self, function):
         for word in function.function:
-            print("interpreting word: {}".format(word))
-            print("stack before {}: {}".format(word, self.stack))
+            if DEBUG_MODE:
+                print("interpreting word: {}".format(word))
+                print("stack before {}: {}".format(word, self.stack))
             self.interpret_word(word, "from function")
-            print("stack after{}: {}".format(word, self.stack))
+            if DEBUG_MODE:
+                print("stack after{}: {}".format(word, self.stack))
 
     def interpret_word(self, word, origin):
         if self.functions.get(word) is not None and self.functions[word].immediate:

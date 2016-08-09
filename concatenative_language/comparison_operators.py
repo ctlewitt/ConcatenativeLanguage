@@ -25,7 +25,6 @@ def greater_or_equal(compiler):
 # == :removes top 2 elements from stack, compares, and pushes boolean result of comparison onto stack
 def equal(compiler):
     right, left = get_right_left(compiler)
-    print("ans to ==: {}".format(left == right))
     compiler.stack.append(left == right)
 
 

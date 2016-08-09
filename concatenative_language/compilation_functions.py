@@ -1,4 +1,5 @@
 from concatenative_language.function import Function
+from concatenative_language.constants import DEBUG_MODE
 
 
 # define:
@@ -29,7 +30,8 @@ def exit_compile_and_block_mode(compiler):
         # just in block_mode, so creating anonymous funtion to be pushed onto stack
         else:
             compiler.stack.append(Function.instructions(compiler.compile_instruction_list))
-        print("compiled function instruction list: {}".format(compiler.compile_instruction_list))
+        if DEBUG_MODE:
+            print("compiled function instruction list: {}".format(compiler.compile_instruction_list))
         # reset compiler's function name and instruction list attributes
         compiler.compile_function_name = ""
         compiler.compile_instruction_list = []
