@@ -142,6 +142,21 @@ define collect_and_memoize_seq {
 
 
 
+
+
+-- num
+define max_collatz_driver {
+
+
+
+
+}
+
+
+
+
+
+
 define manual_len_collatz_seq {
   { 1 } dip
   { None } dip

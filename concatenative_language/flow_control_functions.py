@@ -36,5 +36,16 @@ def while_loop(interpreter):
     # if condition is false, do nothing
 
 
+# for: takes start (inclusive), end (exclusive), step, body
+# iteratively executes for loop's block until end is reached
+def for_loop(interpreter):
+    block = interpreter.stack.pop()
+    step = interpreter.stack.pop()
+    end = interpreter.stack.pop()
+    start = interpreter.stack.pop()
+    for i in range(start, end, step):
+        interpreter.execute(block)
+
+
 def do(interpreter):
     interpreter.execute(interpreter.stack.pop())
