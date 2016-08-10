@@ -1,0 +1,45 @@
+-- ( x y z -- y x z )
+define swapd {
+  { swap } dip
+}
+
+-- ( x y z -- z x y )
+define -rot {
+  swap swapd
+}
+
+-- ( x y -- x )
+define nip {
+  { drop } dip
+}
+
+-- ( x y -- x x y )
+define dupd {
+  { dup } dip
+}
+
+-- ( x y -- x y x )
+define over {
+  dupd swap
+}
+
+-- ( x y -- y x y )
+define tuck {
+  swap over
+}
+
+-- ( x y z -- x y z x )
+define pick {
+  { over } dip
+  swap
+}
+
+-- ( x func - func(x) x )
+-- test with this:
+-- -2 { abs } show_stack keep show_stack
+define keep {
+  dupd
+  swap
+  { do } dip
+}
+

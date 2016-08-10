@@ -1,0 +1,157 @@
+define abs
+{
+  { dup 0 < }
+  { 0 swap - }
+  { }
+  if
+}
+
+
+define mod {
+  { abs } dip
+  { dup } dip
+  dup
+  { / } dip
+  *
+  -
+}
+
+
+
+define even? {
+  { 2 mod 0 == }
+  { True }
+  { False }
+  if
+}
+
+-- takes number and replaces it with the next collatz number
+define collatz_step {
+  { dup even? }
+  { 2 / }
+  { 3 * 1 + }
+  if
+}
+
+define print_collatz_sequence {
+  { dup 1 > }
+  {
+    collatz_step
+    print
+  }
+  while
+}
+
+define collect_collatz_sequence {
+  { arr_create } dip
+  { dup 1 > }
+  {
+    { arr_append } keep
+    collatz_step
+  }
+  while
+}
+
+-- takes a collatz sequence that terminates at 1, initial collatz value, and a dict
+-- memoizes the length of each subsequence
+-- returns updated dict
+-- define memoize_seq {
+--   get base sequcence length (1 or dict value)
+--   take sequence number from stack and make key value pair in dict
+--   update counter
+-- }
+
+
+
+define manual_len_collatz_seq {
+  { 1 } dip
+  { None } dip
+  { dup 1 > }
+  {
+    { 1 + } dip
+    collatz_step
+  }
+  while
+  drop
+
+}
+
+
+
+define len_collatz_seq {
+  dup rot
+  { dict_get dup is_none }
+  { drop swap dup manual_len_collatz_seq dup { dict_set } dip }
+  { { { drop } dip } dip }
+  if
+}
+
+define dup_2_params {
+  { dup } dip
+  dup
+  { swap } dip
+}
+
+define max {
+  dup_2_params
+  { < }
+  { { drop } dip }
+  { drop }
+  if
+}
+
+define print_and_burn {
+  print drop
+}
+
+define do_collatz_from {
+  { dup 1 >= }
+  {
+    dup len_collatz_seq
+    swap 1 -
+  }
+  while
+  drop
+}
+
+
+
+define set_up_for_collatz_with_dict {
+  dup
+  { rot rot } dip
+
+}
+
+define un_setup_for_collatz_with_dict {
+  { rot } dip
+
+}
+
+
+define max_collatz_len_from {
+  { dict_create } dip
+
+  { 0 } dip
+  { dup 1 >= }
+  {
+    set_up_for_collatz_with_dict
+    len_collatz_seq
+    un_setup_for_collatz_with_dict
+    swap 1 -
+    { max } dip
+  }
+  while
+  drop
+}
+
+
+
+
+
+-- todo!!!!
+define for {
+}
+
+
+
+

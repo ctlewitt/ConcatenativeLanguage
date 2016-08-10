@@ -5,7 +5,10 @@ from concatenative_language.calculator import add, sub, mul, div, clr, prt
 from concatenative_language.stack_operations import dup, drop, swap, rot, dip
 from concatenative_language.compilation_functions import enter_compile_mode, exit_compile_and_block_mode, enter_block_mode
 from concatenative_language.flow_control_functions import if_conditional, while_loop, do
-from concatenative_language.comparison_operators import less, less_or_equal, greater, greater_or_equal, equal, not_equal
+from concatenative_language.comparison_operators import less, less_or_equal, greater, greater_or_equal, equal, not_equal, is_none, push_none
+from concatenative_language.dictionary_functions import create_dict, set_dict, get_dict
+from concatenative_language.array_functions import array_append, array_create, array_get, array_len, array_set
+
 import pickle
 import re
 import io
@@ -43,11 +46,21 @@ class ConcatInterpreter:
                 ">=": Function.callback(greater_or_equal),
                 "==": Function.callback(equal),
                 "!=": Function.callback(not_equal),
+                "is_none": Function.callback(is_none),
+                "None": Function.callback(push_none),
                 "+": Function.callback(add),
                 "-": Function.callback(sub),
                 "*": Function.callback(mul),
                 "/": Function.callback(div),
                 "clr": Function.callback(clr),
+                "dict_create": Function.callback(create_dict),
+                "dict_get": Function.callback(get_dict),
+                "dict_set": Function.callback(set_dict),
+                "arr_append": Function.callback(array_append),
+                "arr_create": Function.callback(array_create),
+                "arr_get": Function.callback(array_get),
+                "arr_len": Function.callback(array_len),
+                "arr_set": Function.callback(array_set),
                 "print": Function.callback(prt),
                 "dup": Function.callback(dup),
                 "drop": Function.callback(drop),
