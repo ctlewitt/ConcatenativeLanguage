@@ -75,12 +75,12 @@ define temp {
 
 
 -- tests collatz, memoize, collatz
-dict_create 13 collect_collatz_seq_w_term show_stack
-memoize_seq show_stack
-"after memoization" print_and_burn
-26 collect_collatz_seq_w_term show_stack
-"memoizing" print_and_burn
-memoize_seq show_stack
+-- dict_create 13 collect_collatz_seq_w_term show_stack
+-- memoize_seq show_stack
+-- "after memoization" print_and_burn
+-- 26 collect_collatz_seq_w_term show_stack
+-- "memoizing" print_and_burn
+-- memoize_seq show_stack
 
 
 -- takes dict num returns dict arr
@@ -100,13 +100,13 @@ define collect_collatz_seq_w_term {
 }
 
 
---code to test memoize_seq
-dict_create 1 1 dict_set show_stack
-arr_create
-1 arr_append
-show_stack
-memoize_seq
-show_stack
+-- code to test memoize_seq
+-- dict_create 1 1 dict_set show_stack
+-- arr_create
+-- 1 arr_append
+-- show_stack
+-- memoize_seq
+-- show_stack
 
 
 
@@ -144,12 +144,38 @@ define collect_and_memoize_seq {
 
 
 
--- num
+-- num num --> [num, num]
+-- takes a min and max for the collatz sequence length finder
+-- returns [ start_value, collatz_length ] for the longest collatz sequence starting within the input range
+
 define max_collatz_driver {
+  arr_create 1 arr_append 1 arr_append
+  dict_create
+  837700
 
+  837700
+  837810
+  1
+  {
+    { collect_and_memoize_seq } keep
+    { dict_get } keep
+    { pick 1 arr_get { drop } dip } dip
+    -rot
+    { > }
 
-
-
+    {
+      { swapd { 0 } dip arr_set } keep
+      { swapd dict_get swapd { 1 } dip arr_set } keep
+      swapd
+    }
+    {
+    }
+    if
+    1 +
+  }
+  for
+  drop
+  drop
 }
 
 
@@ -241,10 +267,6 @@ define max_collatz_len_from {
 
 
 
-
--- todo!!!!
-define for {
-}
 
 
 
