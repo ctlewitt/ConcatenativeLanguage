@@ -25,3 +25,9 @@ def array_append(interpreter):
     append_val = interpreter.stack.pop()
     arr = interpreter.stack[-1]
     arr.append(append_val)
+
+
+def array_pop(interpreter):
+    arr = interpreter.stack[-1]
+    last_val = arr.pop()
+    interpreter.stack.append(last_val)

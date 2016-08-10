@@ -42,7 +42,7 @@ define print_collatz_sequence {
   while
 }
 
-define collect_collatz_sequence {
+define collect_collatz_seq {
   { arr_create } dip
   { dup 1 > }
   {
@@ -50,16 +50,95 @@ define collect_collatz_sequence {
     collatz_step
   }
   while
+  arr_append
 }
 
--- takes a collatz sequence that terminates at 1, initial collatz value, and a dict
+define not {
+  { True == }
+  { False }
+  { True }
+  if
+}
+
+-- dict num
+define temp {
+  { 1 1 dict_set } dip
+  { arr_create } dip
+  show_stack
+  rot over
+  show_stack
+  dict_get
+  show_stack
+  is_none not
+  show_stack
+}
+
+
+-- tests collatz, memoize, collatz
+dict_create 13 collect_collatz_seq_w_term show_stack
+memoize_seq show_stack
+"after memoization" print_and_burn
+26 collect_collatz_seq_w_term show_stack
+"memoizing" print_and_burn
+memoize_seq show_stack
+
+
+-- takes dict num returns dict arr
+-- example: dict_create 13 collect_collatz_seq_w_term show_stack
+define collect_collatz_seq_w_term {
+  { 1 1 dict_set } dip
+  { arr_create } dip
+  { rot over dict_get is_none }
+  {
+    -rot
+    { arr_append } keep
+    collatz_step
+  }
+  while
+  -rot
+  arr_append
+}
+
+
+--code to test memoize_seq
+dict_create 1 1 dict_set show_stack
+arr_create
+1 arr_append
+show_stack
+memoize_seq
+show_stack
+
+
+
+
+-- takes a dict and a collatz sequence list
 -- memoizes the length of each subsequence
 -- returns updated dict
--- define memoize_seq {
---   get base sequcence length (1 or dict value)
---   take sequence number from stack and make key value pair in dict
---   update counter
--- }
+define memoize_seq {
+  -1 arr_get
+  { swap } dip
+    dict_get
+  { swap } dip
+  swap
+  { arr_len 0 != }
+  {
+    arr_pop
+    -rot
+    { dup { dict_set } dip 1 + } dip
+  }
+  while
+  drop
+  drop
+}
+
+
+-- test with:
+-- dict_create 43 collect_and_memoize_seq show_stack
+-- (dict num --> dict )
+define collect_and_memoize_seq {
+  collect_collatz_seq_w_term
+  memoize_seq
+}
 
 
 
@@ -79,7 +158,7 @@ define manual_len_collatz_seq {
 
 
 define len_collatz_seq {
-  dup rot
+  dup -rot
   { dict_get dup is_none }
   { drop swap dup manual_len_collatz_seq dup { dict_set } dip }
   { { { drop } dip } dip }
@@ -118,12 +197,12 @@ define do_collatz_from {
 
 define set_up_for_collatz_with_dict {
   dup
-  { rot rot } dip
+  { rot } dip
 
 }
 
 define un_setup_for_collatz_with_dict {
-  { rot } dip
+  { -rot } dip
 
 }
 

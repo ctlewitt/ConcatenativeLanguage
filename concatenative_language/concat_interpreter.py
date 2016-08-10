@@ -7,7 +7,7 @@ from concatenative_language.compilation_functions import enter_compile_mode, exi
 from concatenative_language.flow_control_functions import if_conditional, while_loop, do
 from concatenative_language.comparison_operators import less, less_or_equal, greater, greater_or_equal, equal, not_equal, is_none, push_none
 from concatenative_language.dictionary_functions import create_dict, set_dict, get_dict
-from concatenative_language.array_functions import array_append, array_create, array_get, array_len, array_set
+from concatenative_language.array_functions import array_append, array_create, array_get, array_len, array_set, array_pop
 
 import pickle
 import re
@@ -57,6 +57,7 @@ class ConcatInterpreter:
                 "dict_get": Function.callback(get_dict),
                 "dict_set": Function.callback(set_dict),
                 "arr_append": Function.callback(array_append),
+                "arr_pop": Function.callback(array_pop),
                 "arr_create": Function.callback(array_create),
                 "arr_get": Function.callback(array_get),
                 "arr_len": Function.callback(array_len),

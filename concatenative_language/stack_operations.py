@@ -20,9 +20,9 @@ def rot(interpreter):
     temp1 = interpreter.stack.pop()
     temp2 = interpreter.stack.pop()
     temp3 = interpreter.stack.pop()
+    interpreter.stack.append(temp2)
     interpreter.stack.append(temp1)
     interpreter.stack.append(temp3)
-    interpreter.stack.append(temp2)
 
 
 def dip(compiler):
