@@ -14,10 +14,14 @@ def mul(interpreter):
     interpreter.stack.append(interpreter.stack.pop() * interpreter.stack.pop())
 
 
-def div(interpreter):
+def int_div(interpreter):
     interpreter.execute(interpreter.functions['swap'])
     interpreter.stack.append(interpreter.stack.pop() // interpreter.stack.pop())
-    # todo: make integer division and float division separate functions
+
+
+def float_div(interpreter):
+    interpreter.execute(interpreter.functions['swap'])
+    interpreter.stack.append(interpreter.stack.pop() / interpreter.stack.pop())
 
 
 def clr(interpreter):
