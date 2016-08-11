@@ -1,15 +1,9 @@
 from concatenative_language.function import Function
 from concatenative_language.utils import get_input, cast_to_val
-from concatenative_language.functions.calculator_functions import add, sub, mul, int_div, float_div, clr, prt
-from concatenative_language.functions.stack_operations import dup, drop, swap, rot, dip
-from concatenative_language.functions.compilation_functions import enter_compile_mode, exit_compile_and_block_mode, enter_block_mode
-from concatenative_language.functions.flow_control_functions import if_conditional, while_loop, do, for_loop
-from concatenative_language.functions.comparison_operators import less, less_or_equal, greater, greater_or_equal, equal, not_equal, is_none, push_none
-from concatenative_language.functions.dictionary_functions import create_dict, set_dict, get_dict
-from concatenative_language.functions.array_functions import array_append, array_create, array_get, array_len, array_set, array_pop
-from concatenative_language.functions.output_functions import print_stack, print_func
+import concatenative_language.functions as f
 import pickle
 import re
+import io
 from concatenative_language.constants import DEBUG_MODE
 
 
@@ -36,47 +30,49 @@ class ConcatInterpreter:
                 self.functions = pickle.load(func_file)
         except IOError:
             self.functions = {
-                "define": Function.callback(enter_compile_mode, True),
-                "{": Function.callback(enter_block_mode, True),
-                "}": Function.callback(exit_compile_and_block_mode, True),
-                "do": Function.callback(do),
-                "if": Function.callback(if_conditional),
-                "while": Function.callback(while_loop),
-                "for": Function.callback(for_loop),
-                "<": Function.callback(less),
-                "<=": Function.callback(less_or_equal),
-                ">": Function.callback(greater),
-                ">=": Function.callback(greater_or_equal),
-                "==": Function.callback(equal),
-                "!=": Function.callback(not_equal),
-                "is_none": Function.callback(is_none),
-                "None": Function.callback(push_none),
-                "+": Function.callback(add),
-                "-": Function.callback(sub),
-                "*": Function.callback(mul),
-                "/": Function.callback(float_div),
-                "//": Function.callback(int_div),
-                "clr": Function.callback(clr),
-                "dict_create": Function.callback(create_dict),
-                "dict_get": Function.callback(get_dict),
-                "dict_set": Function.callback(set_dict),
-                "arr_append": Function.callback(array_append),
-                "arr_pop": Function.callback(array_pop),
-                "arr_create": Function.callback(array_create),
-                "arr_get": Function.callback(array_get),
-                "arr_len": Function.callback(array_len),
-                "arr_set": Function.callback(array_set),
-                "print": Function.callback(print_func),
-                "dup": Function.callback(dup),
-                "drop": Function.callback(drop),
-                "swap": Function.callback(swap),
-                "dip": Function.callback(dip),
-                "rot": Function.callback(rot),
+                "define": Function.callback(f.enter_compile_mode, True),
+                "{": Function.callback(f.enter_block_mode, True),
+                "}": Function.callback(f.exit_compile_and_block_mode, True),
+                "do": Function.callback(f.do),
+                "if": Function.callback(f.if_conditional),
+                "while": Function.callback(f.while_loop),
+                "for": Function.callback(f.for_loop),
+                "<": Function.callback(f.less),
+                "<=": Function.callback(f.less_or_equal),
+                ">": Function.callback(f.greater),
+                ">=": Function.callback(f.greater_or_equal),
+                "==": Function.callback(f.equal),
+                "!=": Function.callback(f.not_equal),
+                "is_none": Function.callback(f.is_none),
+                "None": Function.callback(f.push_none),
+                "+": Function.callback(f.add),
+                "-": Function.callback(f.sub),
+                "*": Function.callback(f.mul),
+                "/": Function.callback(f.float_div),
+                "//": Function.callback(f.int_div),
+                "clr": Function.callback(f.clr),
+                "dict_create": Function.callback(f.create_dict),
+                "dict_get": Function.callback(f.get_dict),
+                "dict_set": Function.callback(f.set_dict),
+                "arr_append": Function.callback(f.array_append),
+                "arr_pop": Function.callback(f.array_pop),
+                "arr_create": Function.callback(f.array_create),
+                "arr_get": Function.callback(f.array_get),
+                "arr_len": Function.callback(f.array_len),
+                "arr_set": Function.callback(f.array_set),
+                "print": Function.callback(f.print_func),
+                "dup": Function.callback(f.dup),
+                "drop": Function.callback(f.drop),
+                "swap": Function.callback(f.swap),
+                "dip": Function.callback(f.dip),
+                "rot": Function.callback(f.rot),
                 "sq": Function.instructions(["dup", "*"]),
-                "fourth": Function.instructions(["sq", "sq"]),
-                "add2and2": Function.instructions([2, 2, "+"]),
-                "show_stack": Function.callback(print_stack)
+                "show_stack": Function.callback(f.print_stack)
             }
+
+
+    def interpret_string(self, source_str):
+        self.interpret_file(io.StringIO(source_str))
 
     # reads in source code, splits into tokens, ignores comments, interprets everything else
     # when done, dumps accumulated functions to-date into a pickle for retrieval in future runs

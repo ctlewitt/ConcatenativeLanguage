@@ -1,0 +1,1 @@
+from concatenative_language.concat_interpreter import ConcatInterpreter

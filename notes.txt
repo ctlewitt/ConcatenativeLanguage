@@ -7,6 +7,17 @@ organize user added funtions
 have all built in functions written in the language load automatically
 add ability to comment inline in a function -- test this! &&& comment &&&
 make sure that main interpreter reads clearly
+load functions
+
+potentially pull function execution/interpretation into function.py from concat_interpreter.py;
+  need to use qualified import statements (see function.py)
 
 
-Research what makes a language Turing complete.  Am I done yet?  
+finish refactoring tests (pull string into test, use assertStackEquals)
+
+
+
+
+Research what makes a language Turing complete.  Am I done yet?
+
+# todo: should check to make sure that function is not a number, boolean, etc

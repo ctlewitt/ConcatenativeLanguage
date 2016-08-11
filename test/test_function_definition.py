@@ -1,7 +1,6 @@
 import unittest
 from concatenative_language.concat_interpreter import ConcatInterpreter
 import os
-import io
 
 
 class TestFunctionDefinition(unittest.TestCase):
@@ -12,10 +11,15 @@ class TestFunctionDefinition(unittest.TestCase):
             pass
         self.my_interpreter = ConcatInterpreter()
 
-    def test_fail_with_invalid_function_name(self):
+    def test_exception_with_invalid_function_name(self):
         test_str = "nonexistent_function"
         with self.assertRaises(TypeError):
-            self.my_interpreter.interpret_file(io.StringIO(test_str))
+            self.my_interpreter.interpret_string(test_str)
+
+    def test_exception_with_overwriting_non_overwritable_function_name(self):
+        test_str = "define print { }"
+        with self.assertRaises(Exception):
+            self.my_interpreter.interpret_string(test_str)
 
     def test_named_func_def_and_exec(self):
         pass

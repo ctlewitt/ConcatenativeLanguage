@@ -1,3 +1,6 @@
+# import concatenative_language.concat_interpreter as ci
+
+
 class Function:
     """
     Attributes:
