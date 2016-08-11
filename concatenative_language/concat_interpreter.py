@@ -16,16 +16,20 @@ from concatenative_language.constants import DEBUG_MODE
 class ConcatInterpreter:
     def __init__(self):
         self.stack = []
-        self.compile_mode = False # todo make name that indicates compiling a named function;
-        self.block_mode = False
-        self.need_func_name = False
-        self.block_depth = 0
-        self.compile_instruction_list = []
-        self.compile_function_name = ""
         self.functions = None
         self.load_functions()
         self.var_types = frozenset([int, float, str, bool, list])
+        # variables for compiling named function modes
+        self.compile_mode = False  # todo make name that more clearly indicates compiling a named function
+        self.need_func_name = False
+        # variables for compiling anonymous function (or block/body/conditional) modes
+        self.block_mode = False
+        self.block_depth = 0  # for nested functions
+        # currently-compiling function details
+        self.compile_function_name = ""
+        self.compile_instruction_list = []
 
+    # tries to load all builtin and user-defined functions from pickle; otherwise loads default builtin set of functions
     def load_functions(self):
         try:
             with open("saved_functions.pickle", "rb") as func_file:
@@ -74,6 +78,8 @@ class ConcatInterpreter:
                 "show_stack": Function.callback(print_stack)
             }
 
+    # reads in source code, splits into tokens, ignores comments, interprets everything else
+    # when done, dumps accumulated functions to-date into a pickle for retrieval in future runs
     def interpret_file(self, source=None):
         for line in get_input(source): # fileinput.input(files=input_file):
             for token in re.findall(r'(\"[^\"]*\"|\'[^\']*\'|[\S]+|\[.^\w*\])', line):
@@ -98,7 +104,7 @@ class ConcatInterpreter:
         else:
             self.interpret(function)
 
-    # go through each instruction in a list of instructions function
+    # go through each word/instruction in a function's list of instructions and interpret each word
     def interpret(self, function):
         for word in function.function:
             if DEBUG_MODE:
@@ -108,15 +114,17 @@ class ConcatInterpreter:
             if DEBUG_MODE:
                 print("stack after{}: {}".format(word, self.stack))
 
+    # interprets a single word;
+    # immediate functions are always executed
+    # if in compile mode, saves as function name or adds to list of instructions, as appropriate
+    # if not compiling, executes functions and pushes other values onto the stack
     def interpret_word(self, word):
         if isinstance(word, Function) and word.immediate:  # self.functions.get(word) is not None and self.functions[word].immediate:
             self.execute(word) # self.execute(self.functions[word])
         # if in compile mode but not block, function needs name
         elif self.need_func_name:
             # Once in compilation mode, var/function name must be next token
-            # might need to allow for reassigning functions (maybe if not built in, allow reassignment)...
             if word in self.functions and not self.functions[word].overwritable:
-                print("trying to overwrite function {}".format(word))
                 raise Exception("cannot redeclare function {}".format(word))
             self.compile_function_name = word
             self.need_func_name = False
@@ -124,13 +132,7 @@ class ConcatInterpreter:
         elif self.block_mode:
             self.compile_instruction_list.append(word)
         # executing (ie, not compile or block mode)
-        # if word in self.functions:
-        #elif word in self.functions:
         elif isinstance(word, Function):
-            # self.execute(self.functions[word])
             self.execute(word)
         else:
             self.stack.append(word)
-            # append_with_type_cast(self.stack, word, origin, self.functions)
-
-
