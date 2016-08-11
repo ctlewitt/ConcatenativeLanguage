@@ -21,3 +21,7 @@ finish refactoring tests (pull string into test, use assertStackEquals)
 Research what makes a language Turing complete.  Am I done yet?
 
 # todo: should check to make sure that function is not a number, boolean, etc
+
+
+python3 setup.py install
+python3 setup.py develop
