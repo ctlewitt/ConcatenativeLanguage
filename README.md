@@ -11,10 +11,12 @@ The interpreter can be found in the concat_interpreter.py file.
 ## How the Interpreter Works
 When the interpreter is run, it breaks up the input into tokens and processes each one in order.  
 There are three situations that might be encountered:
+
 1. If the token is a value, such as an integer, string or list, it is placed onto the stack.
+
 2. If the token is a function that has already been defined, it executes it.  (See below for an explanation of how functions are executed.)
-3. If the interpreter encounters a function that needs to be compiled (indicated by "define" or "{"), it stops interpreting, as in 1 and 2 above, and begins compiling the function.
-Upon completion (when a "}" has been reached), the function is either saved into the name space or pushed onto the stack (like any other value encountered, such as an integer or string) if it is an anonymous function.  
+
+3. If the interpreter encounters a function that needs to be compiled (indicated by "define" or "{"), it stops interpreting, as in 1 and 2 above, and begins compiling the function.Upon completion (when a "}" has been reached), the function is either saved into the name space or pushed onto the stack (like any other value encountered, such as an integer or string) if it is an anonymous function.  
 
 ## Functions
 ### First Class Functions
@@ -56,7 +58,10 @@ For examples of code written in Don't Answer, please see the variations of the p
 
 ## Further Work
 Things that are still under development:
-1) Being able to look in a file tree and load all of the user-defined functions contained therein.  (Since the pickle must be deleted and all of the functions reloaded from scratch when a new built in function is added, and since the language is still under development, this would be very useful for the time being.)
-2) Although comments are available outside of functions, there are none available yet within functions, and this would be quite useful, especially when stack manipulation becomes complicated.  (I am new to this language paradigm, so this happens disappointingly often.)  
-3) Better comments and documentation are needed for functions, describing their functionality, parameters, and return values.  
-4) And of course, more and better functions and data structures, etc.
+1. Being able to look in a file tree and load all of the user-defined functions contained therein.  (Since the pickle must be deleted and all of the functions reloaded from scratch when a new built in function is added, and since the language is still under development, this would be very useful for the time being.)
+
+2. Although comments are available outside of functions, there are none available yet within functions, and this would be quite useful, especially when stack manipulation becomes complicated.  (I am new to this language paradigm, so this happens disappointingly often.)  
+
+3. Better comments and documentation are needed for functions, describing their functionality, parameters, and return values.  
+
+4. And of course, more and better functions and data structures, etc.
