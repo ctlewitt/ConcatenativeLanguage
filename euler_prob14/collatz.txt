@@ -147,14 +147,14 @@ define collect_and_memoize_seq {
 -- num num --> [num, num]
 -- takes a min and max for the collatz sequence length finder
 -- returns [ start_value, collatz_length ] for the longest collatz sequence starting within the input range
-
+-- for example: 837700 837810 max_collatz_driver show_stack
 define max_collatz_driver {
   arr_create 1 arr_append 1 arr_append
   dict_create
-  837700
 
-  837700
-  837810
+  rot
+  { rot } dip
+  dupd
   1
   {
     { collect_and_memoize_seq } keep
