@@ -1,16 +1,12 @@
-Need to have lists [] be added to the stack as functions.
-
-It feels wrong to give each function control of the stack instead of passing it variables.  Seems to be normal, though.
-introspection
-or write out (add, 2) which indicates having 2 parameters
-can functions have attributes?
-python: inspect, get args back
-
-
-play with stack based languages
-forth
-factor
+add comments for each function about parameters, actions, return values
+update "compiler" references to "interpreter"
+integrate input into tests
+finish function tests
+test certain stack functions
+organize user added funtions
+have all built in functions written in the language load automatically
+add ability to comment inline in a function -- test this! &&& comment &&&
+make sure that main interpreter reads clearly
 
 
-This doesn't feel Turing complete yet--more like a programmable calculator.
-Research what makes a language Turing complete.
+Research what makes a language Turing complete.  Am I done yet?  
