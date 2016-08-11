@@ -1,5 +1,5 @@
-# Don't Answer: 
-**A concatenative language and interpreter (named after my cat, in good concatenative tradition)**
+# Don't Answer*: A concatenative language and interpreter
+*named after my cat, in good concatenative tradition
 
 Don't Answer is a concatenative language and interpreter written in Python based on Harlows Monkeys' instructions for how to do so in C in their comment on the following Reddit page:
 
