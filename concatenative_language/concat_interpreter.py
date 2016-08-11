@@ -1,7 +1,7 @@
 import sys
 from concatenative_language.function import Function
 from concatenative_language.utils import print_stack, get_input, cast_to_val # , append_with_type_cast
-from concatenative_language.functions.calculator import add, sub, mul, div, clr, prt
+from concatenative_language.functions.calculator import add, sub, mul, int_div, float_div, clr, prt
 from concatenative_language.functions.stack_operations import dup, drop, swap, rot, dip
 from concatenative_language.functions.compilation_functions import enter_compile_mode, exit_compile_and_block_mode, enter_block_mode
 from concatenative_language.functions.flow_control_functions import if_conditional, while_loop, do, for_loop
@@ -52,7 +52,8 @@ class ConcatInterpreter:
                 "+": Function.callback(add),
                 "-": Function.callback(sub),
                 "*": Function.callback(mul),
-                "/": Function.callback(div),
+                "/": Function.callback(float_div),
+                "//": Function.callback(int_div),
                 "clr": Function.callback(clr),
                 "dict_create": Function.callback(create_dict),
                 "dict_get": Function.callback(get_dict),
