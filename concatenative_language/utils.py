@@ -3,12 +3,6 @@ import fileinput
 from concatenative_language.constants import DEBUG_MODE
 
 
-# helper to print the contents of the stack
-def print_stack(interpreter):
-    for elem in interpreter.stack:
-        print("{}, ".format(elem), end="")
-    print()
-
 
 def cast_to_number_if_possible(word):
     try:

@@ -1,17 +1,15 @@
-import sys
 from concatenative_language.function import Function
-from concatenative_language.utils import print_stack, get_input, cast_to_val # , append_with_type_cast
-from concatenative_language.functions.calculator import add, sub, mul, int_div, float_div, clr, prt
+from concatenative_language.utils import get_input, cast_to_val
+from concatenative_language.functions.calculator_functions import add, sub, mul, int_div, float_div, clr, prt
 from concatenative_language.functions.stack_operations import dup, drop, swap, rot, dip
 from concatenative_language.functions.compilation_functions import enter_compile_mode, exit_compile_and_block_mode, enter_block_mode
 from concatenative_language.functions.flow_control_functions import if_conditional, while_loop, do, for_loop
 from concatenative_language.functions.comparison_operators import less, less_or_equal, greater, greater_or_equal, equal, not_equal, is_none, push_none
 from concatenative_language.functions.dictionary_functions import create_dict, set_dict, get_dict
 from concatenative_language.functions.array_functions import array_append, array_create, array_get, array_len, array_set, array_pop
-
+from concatenative_language.functions.output_functions import print_stack, print_func
 import pickle
 import re
-import io
 from concatenative_language.constants import DEBUG_MODE
 
 
@@ -64,7 +62,7 @@ class ConcatInterpreter:
                 "arr_get": Function.callback(array_get),
                 "arr_len": Function.callback(array_len),
                 "arr_set": Function.callback(array_set),
-                "print": Function.callback(prt),
+                "print": Function.callback(print_func),
                 "dup": Function.callback(dup),
                 "drop": Function.callback(drop),
                 "swap": Function.callback(swap),
