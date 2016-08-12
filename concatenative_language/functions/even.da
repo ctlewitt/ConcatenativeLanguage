@@ -1,0 +1,6 @@
+define even? {
+  { 2 mod 0 == }
+  { True }
+  { False }
+  if
+}

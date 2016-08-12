@@ -1,0 +1,6 @@
+define not {
+  { True == }
+  { False }
+  { True }
+  if
+}

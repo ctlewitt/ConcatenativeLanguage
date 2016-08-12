@@ -1,0 +1,130 @@
+-- https://projecteuler.net/problem=14
+
+-- to get answer, use the following command:
+-- 500000 1000000 max_collatz_driver show_stack
+-- This runs very slowly.  To get to the optimal answer faster, run the following command
+-- 837700 837810 max_collatz_driver show_stack
+
+
+
+-- code to test collatz_step
+-- 2 collatz_step
+-- 3 collatz_step
+-- 33 collatz_step
+-- 52 collatz_step
+
+-- int -> int
+-- takes number and returns next collatz number in sequence
+define collatz_step {
+  { dup even? }
+  { 2 // }
+  { 3 * 1 + }
+  if
+}
+
+
+
+-- code to test collect_collatz_seq_w_term
+-- dict_create 13 collect_collatz_seq_w_term show_stack
+
+-- dict int -> dict array
+-- takes a dict of memoized sequence lengths and a start number for a new collatz sequence
+-- returns the original dict and an array containing all of the steps in the new collatz sequence,
+-- stopping at the first already memoized term
+define collect_collatz_seq_w_term {
+  { 1 1 dict_set } dip
+  { arr_create } dip
+  { rot over dict_get is_none }
+  {
+    -rot
+    { arr_append } keep
+    collatz_step
+  }
+  while
+  -rot
+  arr_append
+}
+
+
+
+-- code to test memoize_seq
+-- dict_create 1 1 dict_set show_stack
+-- arr_create
+-- 1 arr_append
+-- show_stack
+-- memoize_seq
+-- show_stack
+
+-- dict array -> dict
+-- takes a dict and an array of a single collatz sequence
+-- (the first element is the head, the last is either 1 or the head of the first already-memoized sequence length found)
+-- calculates (by incrementing) and memoizes the length of each subsequence and returns updated dict
+define memoize_seq {
+  -1 arr_get
+  { swap } dip
+    dict_get
+  { swap } dip
+  swap
+  { arr_len 0 != }
+  {
+    arr_pop
+    -rot
+    { dup { dict_set } dip 1 + } dip
+  }
+  while
+  drop
+  drop
+}
+
+
+
+-- code to test collect_and_memoize_seq:
+-- dict_create 43 collect_and_memoize_seq show_stack
+
+-- (dict int --> dict )
+-- takes a dict of memoized sequence lengths and the head of a new collatz sequence
+-- calculates the sequence up until the first already-memoized term in the sequence (which is the head of another seq)
+-- memoizes the lengths of all the subsequences within the list and
+-- returns the updated dict (which is used for memoizing)
+define collect_and_memoize_seq {
+  collect_collatz_seq_w_term
+  memoize_seq
+}
+
+
+
+-- code to test max_collatz_driver
+-- 837700 837810 max_collatz_driver show_stack
+
+-- int int --> [int, int]
+-- takes a min and max for the collatz sequence length finder
+-- returns [ start_value, collatz_length ] for the longest collatz sequence starting within the input range
+define max_collatz_driver {
+  arr_create 1 arr_append 1 arr_append
+  dict_create
+
+  rot
+  { rot } dip
+  dupd
+  1
+  {
+    { collect_and_memoize_seq } keep
+    { dict_get } keep
+    { pick 1 arr_get { drop } dip } dip
+    -rot
+    { > }
+
+    {
+      { swapd { 0 } dip arr_set } keep
+      { swapd dict_get swapd { 1 } dip arr_set } keep
+      swapd
+    }
+    {
+    }
+    if
+    1 +
+  }
+  for
+  drop
+  drop
+}

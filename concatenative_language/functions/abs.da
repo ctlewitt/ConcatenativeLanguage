@@ -1,0 +1,7 @@
+define abs
+{
+  { dup 0 < }
+  { 0 swap - }
+  { }
+  if
+}

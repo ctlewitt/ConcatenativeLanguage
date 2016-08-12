@@ -1,4 +1,11 @@
-#  add additional functions bi, dip
+#  add function bi()
+
+
+# entire_stack -> []
+# removes everything from the stack
+# warning: very destructive
+def clr(interpreter):
+    interpreter.stack = []
 
 
 def dup(compiler):

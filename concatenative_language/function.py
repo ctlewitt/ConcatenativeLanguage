@@ -7,6 +7,7 @@ class Function:
     built_in: boolean indicating whether a function is built in (callback) or interpreted (list of instructions)
     function: callback or list of instructions (depending on c_flag) for function
     immediate: boolean indicating function to be executed regardless of compilation state
+    overwritable: boolean indicating whether a function can be overwritten
     """
     def __init__(self, built_in, function, immediate, overwritable):
         self.built_in = built_in
